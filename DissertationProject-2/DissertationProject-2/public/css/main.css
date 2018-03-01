@@ -1,0 +1,23 @@
+body {
+    background-color: #ceff99;
+}
+
+#logo {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}
+
+button {
+    width: 200px;
+    font-size: 16px;
+}
+
+#results {
+    width: 100%;
+    overflow: scroll;
+}
+
+#results::first-line {
+    color: red
+}
