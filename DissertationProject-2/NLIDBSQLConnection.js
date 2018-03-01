@@ -1,4 +1,4 @@
-/* test*/
+/* Jonny*/
 /*jshint esversion: 6 */
 var mysql = require('mysql');
 var express = require('express');
@@ -100,7 +100,7 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Available";
                 break;
 
-           /* case "cancel":
+                /* case "cancel":
                 stemmed[index] = "Cancellation";
                 break;
 */
@@ -199,10 +199,10 @@ function mapSynonyms(stemmed) {
             case "expiri":
                 stemmed[index] = "ExpiryDate";
                 break;
-// Need to look at this
-           case "occup":
+                // Need to look at this
+            case "occup":
                 stemmed[index] = "Max_Guest";
-                break; 
+                break;
 
             case "descript":
                 stemmed[index] = "Room_Description";
@@ -240,7 +240,7 @@ function mapSynonyms(stemmed) {
                 break;
 
             case "price":
-                stemmed [index] = "Price";
+                stemmed[index] = "Price";
                 break;
 
 
@@ -285,16 +285,16 @@ function mapSqlQuery(formattedQuery) {
     value = getSqlValue(formattedQuery, table, column);
     max = getMaxValue(formattedQuery, table, column);
     min = getMinValue(formattedQuery, table, column);
-  
 
-    if(table && column && value !== null && max == null)
+
+    if (table && column && value !== null && max == null)
         sql = "select * from " + table + " where " + column + " like '%" + value + "%'";
 
     else if (table && column && max !== null && min == null)
-        sql = "select "+column1+", MAX("+column+") from "+table;
+        sql = "select " + column1 + ", MAX(" + column + ") from " + table;
 
     else if (table && column && min !== null && max == null)
-        sql = "select "+column1+",MIN("+column+") from "+table;
+        sql = "select " + column1 + ",MIN(" + column + ") from " + table;
 
     else if (value == null && table && column !== null)
         sql = "select " + column + " from " + table;
@@ -308,7 +308,7 @@ function mapSqlQuery(formattedQuery) {
     value = null;
     max = null;
     min = null;
-  
+
 
     return sql;
 }
@@ -325,8 +325,8 @@ function capitalizeFirstLetter(word) {
 function getMaxValue(query) {
     var listOfMax = [];
 
-    listOfMax.push("MAX","EXPENS","MOST","LAVISH");
-    
+    listOfMax.push("MAX", "EXPENS", "MOST", "LAVISH");
+
 
     query.forEach(word => {
 
@@ -343,8 +343,8 @@ function getMaxValue(query) {
 function getMinValue(query) {
     var listOfMin = [];
 
-    listOfMin.push("MIN","CHEAPEST","CUT","LOW","SALE","ECONOMY");
-    
+    listOfMin.push("MIN", "CHEAPEST", "CUT", "LOW", "SALE", "ECONOMY");
+
 
     query.forEach(word => {
 
@@ -374,19 +374,19 @@ function getSqlValue(query) {
 
         if (table === "Booking" && word.toUpperCase() === "UNPAID") {
             value = 'N';
-             column = 'Paid';
+            column = 'Paid';
         }
         if (table === "Booking" && word.toUpperCase() === "PAID") {
             value = 'Y';
-             column = 'Paid';
+            column = 'Paid';
         }
         if (table === "Booking" && word.toUpperCase() === "OWE") {
             value = 'N';
-             column = 'Paid';
+            column = 'Paid';
         }
         if (table === "Booking" && word.toUpperCase() === "CANCEL") {
             value = 'Y';
-             column = 'Cancellation';
+            column = 'Cancellation';
         }
         if (table === "Location" && listOfLocations.indexOf(word.toUpperCase()) !== -1) {
             value = word;
@@ -394,11 +394,11 @@ function getSqlValue(query) {
         }
         if (table === "Room_Type" && word.toUpperCase() === "FOUR") {
             value = '4';
-             column = 'Max_Guest';
+            column = 'Max_Guest';
         }
         if (table === "Room_Type" && word.toUpperCase() === "KING") {
             value = word;
-             column = 'Room_Description';
+            column = 'Room_Description';
         }
 
     });
