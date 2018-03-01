@@ -1,4 +1,4 @@
-/* leeming*/
+/* Jonnyleeming*/
 /*jshint esversion: 6 */
 var mysql = require('mysql');
 var express = require('express');
