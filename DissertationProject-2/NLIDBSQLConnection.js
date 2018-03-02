@@ -132,10 +132,6 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Room_Type";
                 break;
 
-            case "cost":
-                stemmed[index] = "Total Cost";
-                break;
-
             case "salut":
                 stemmed[index] = "Salutation";
                 break;
@@ -325,7 +321,7 @@ function capitalizeFirstLetter(word) {
 function getMaxValue(query) {
     var listOfMax = [];
 
-    listOfMax.push("MAX", "EXPENS", "MOST", "LAVISH");
+    listOfMax.push("MAX", "EXPENS", "LAVISH","COST");
 
 
     query.forEach(word => {
@@ -343,7 +339,7 @@ function getMaxValue(query) {
 function getMinValue(query) {
     var listOfMin = [];
 
-    listOfMin.push("MIN", "CHEAPEST", "CUT", "LOW", "SALE", "ECONOMY");
+    listOfMin.push("MIN", "CHEAPEST", "CUT", "LOW", "SALE", "ECONOMY", "LEAST", "LOWEST");
 
 
     query.forEach(word => {
