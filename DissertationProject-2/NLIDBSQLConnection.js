@@ -1,4 +1,3 @@
-/* Jonny*/
 /*jshint esversion: 6 */
 var mysql = require('mysql');
 var express = require('express');
@@ -6,13 +5,14 @@ var sw = require('stopword');
 var st = require('node-snowball');
 var app = express();
 var results = "No Results Returned";
+var latestSqlQuery = "";
 var table = null;
 var column = null;
-var column1 = null;
 var value = null;
 var max = null;
 var min = null;
-
+var listOfLocations = [];
+listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON");
 
 // Binding express app to port 3000
 app.listen(3000, function() {
@@ -37,16 +37,21 @@ app.post('/requestQuery', function(req, res) {
     console.log("Received: " + rawQuery + ". Formatted: " + stemmed);
     var withSynonyms = mapSynonyms(stemmed);
     var sql = mapSqlQuery(withSynonyms);
-    res.send(returnResult(sql));
+    latestSqlQuery = sql;
+
+    var results = {
+        data: returnResult(sql)
+    };
+    res.send(results);
 });
 
 app.post('/insertFeedback', function(request, res) {
     var isPositive = request.body.isPositive;
     var reservationQuery = request.body.reservationQuery;
-    var fsql = request.body.sql;
 
-    feedbacksql = "INSERT INTO Logs (Input, SQLreturned, Feedback) values ('" + reservationQuery + "', '" + fsql + "', '" + isPositive + "')";
+    feedbacksql = "INSERT INTO Logs (Input, SQLreturned, Feedback) values ('" + reservationQuery + "', '" + latestSqlQuery + "', '" + isPositive + "')";
     returnResult(feedbacksql);
+    res.send(200);
 });
 
 function returnResult(query) {
@@ -72,10 +77,15 @@ function returnResult(query) {
     return results;
 }
 
+
 function mapSynonyms(stemmed) {
+
     stemmed.forEach(word => {
+
         var index = stemmed.indexOf(word);
+
         switch (word) {
+
             case "book":
                 stemmed[index] = "Booking";
                 break;
@@ -104,6 +114,7 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Cancellation";
                 break;
 */
+
             case "comment":
                 stemmed[index] = "Comments";
                 break;
@@ -128,8 +139,12 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Payment_ID";
                 break;
 
-            case "room":
+            case "type":
                 stemmed[index] = "Room_Type";
+                break;
+
+            case "cost":
+                stemmed[index] = "Total Cost";
                 break;
 
             case "salut":
@@ -188,6 +203,7 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "postcode";
                 break;
 
+
             case "card":
                 stemmed[index] = "CardNo";
                 break;
@@ -196,6 +212,7 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "ExpiryDate";
                 break;
                 // Need to look at this
+
             case "occup":
                 stemmed[index] = "Max_Guest";
                 break;
@@ -207,9 +224,11 @@ function mapSynonyms(stemmed) {
             case "manchest":
                 stemmed[index] = "Manchester";
                 break;
+
             case "custom":
                 stemmed[index] = "Guest";
                 break;
+
 
             case "guest":
                 stemmed[index] = "Guest";
@@ -218,6 +237,7 @@ function mapSynonyms(stemmed) {
             case "client":
                 stemmed[index] = "Guest";
                 break;
+
 
             case "hotel":
                 stemmed[index] = "Location";
@@ -239,10 +259,44 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Price";
                 break;
 
+            case "doubl":
+                stemmed[index] = "Double";
+                break;
 
+            case "london":
+                stemmed[index] = "London";
+                break;
 
+            case "liverpool":
+                stemmed[index] = "Liverpool";
+                break;
+
+            case "bolton":
+                stemmed[index] = "Bolton";
+                break;
+
+            case "west bromwich":
+                stemmed[index] = "WestBromwich";
+                break;
+
+            case "singl":
+                stemmed[index] = "Single";
+                break;
+
+            case "honey":
+                stemmed[index] = "HoneyMoon";
+                break;
+
+            case "group":
+                stemmed[index] = "Group Single";
+                break;
+
+            case "king":
+                stemmed[index] = "King";
+                break;
 
         }
+
     });
     return stemmed;
 }
@@ -278,19 +332,23 @@ function mapSqlQuery(formattedQuery) {
 
     });
 
-    value = getSqlValue(formattedQuery, table, column);
-    max = getMaxValue(formattedQuery, table, column);
-    min = getMinValue(formattedQuery, table, column);
+    value = getSqlValue(formattedQuery);
+    max = getMaxValue(formattedQuery);
+    min = getMinValue(formattedQuery);
 
 
-    if (table && column && value !== null && max == null)
+    if (table == "Room") {
+        var view = mapViewName(formattedQuery);
+        sql = "select * from " + view;
+
+    } else if (table && column && value !== null && max == null)
         sql = "select * from " + table + " where " + column + " like '%" + value + "%'";
 
     else if (table && column && max !== null && min == null)
-        sql = "select " + column1 + ", MAX(" + column + ") from " + table;
+        sql = "select MAX(" + column + ") from " + table;
 
     else if (table && column && min !== null && max == null)
-        sql = "select " + column1 + ",MIN(" + column + ") from " + table;
+        sql = "select MIN(" + column + ") from " + table;
 
     else if (value == null && table && column !== null)
         sql = "select " + column + " from " + table;
@@ -300,11 +358,9 @@ function mapSqlQuery(formattedQuery) {
 
     table = null;
     column = null;
-    column1 = null;
     value = null;
     max = null;
     min = null;
-
 
     return sql;
 }
@@ -321,36 +377,41 @@ function capitalizeFirstLetter(word) {
 function getMaxValue(query) {
     var listOfMax = [];
 
-    listOfMax.push("MAX", "EXPENS", "LAVISH","COST");
-
+    listOfMax.push("MAX", "EXPENS", "MOST", "LAVISH");
 
     query.forEach(word => {
 
+
         if (table === "Room_Type" && listOfMax.indexOf(word.toUpperCase()) !== -1) {
+
             max = word;
             column = 'Price';
             column1 = 'Room_Description';
+
         }
 
     });
     return max;
+
 }
 
 function getMinValue(query) {
     var listOfMin = [];
 
-    listOfMin.push("MIN", "CHEAPEST", "CUT", "LOW", "SALE", "ECONOMY", "LEAST", "LOWEST");
-
+    listOfMin.push("MIN", "CHEAPEST", "CUT", "LOW", "SALE", "ECONOMY");
 
     query.forEach(word => {
+
 
         if (table === "Room_Type" && listOfMin.indexOf(word.toUpperCase()) !== -1) {
             min = word;
             column = 'Price';
             column1 = 'Room_Description';
+
         }
 
     });
+
     return min;
 }
 
@@ -358,47 +419,79 @@ function getMinValue(query) {
 function getSqlValue(query) {
     var listOfLocations = [];
 
-    listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMICH", "LIVERPOOL", "BOLTON");
+    listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON");
+
 
     query.forEach(word => {
-
 
         if (table === "Booking" && word.toUpperCase() === "NOT") {
             value = 'N';
             column = 'Paid';
         }
 
+
         if (table === "Booking" && word.toUpperCase() === "UNPAID") {
             value = 'N';
             column = 'Paid';
+
         }
+
         if (table === "Booking" && word.toUpperCase() === "PAID") {
             value = 'Y';
             column = 'Paid';
         }
+
         if (table === "Booking" && word.toUpperCase() === "OWE") {
             value = 'N';
             column = 'Paid';
         }
+
         if (table === "Booking" && word.toUpperCase() === "CANCEL") {
             value = 'Y';
             column = 'Cancellation';
+
         }
+
         if (table === "Location" && listOfLocations.indexOf(word.toUpperCase()) !== -1) {
             value = word;
             column = 'City';
+
         }
+
         if (table === "Room_Type" && word.toUpperCase() === "FOUR") {
+
             value = '4';
             column = 'Max_Guest';
         }
+
         if (table === "Room_Type" && word.toUpperCase() === "KING") {
             value = word;
             column = 'Room_Description';
+
+        }
+    });
+
+    return value;
+}
+
+function mapViewName(query) {
+    var viewTypeName = "Room";
+
+    query.forEach(word => {
+        if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Double") !== -1) {
+            viewName = word + "DoubleRooms";
+        } else if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Single") !== -1) {
+            viewName = word + "SingleRooms";
+        } else if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("King") !== -1) {
+            viewName = word + "KingRooms";
+        } else if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("HoneyMoon") !== -1) {
+            viewName = word + "HoneyMoonRooms";
+        } else if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Group Single") !== -1) {
+            viewName = word + "GroupSingleRooms";
         }
 
     });
-    return value;
+    return viewName;
 }
 
 function removeArrayItem(array, itemToRemove) {
@@ -406,6 +499,4 @@ function removeArrayItem(array, itemToRemove) {
     if (index > -1)
         array.splice(index, 1);
     return array;
-
-
 }

@@ -4,20 +4,18 @@ function postQueryData() {
         "payload": reservationQuery
     }, function(results) {
         console.log(results);
-        if (results == "No Results Returned") {
+        if (results.data == "No Results Returned") {
             $('#results').text("No results returned, please retype your question");
 
-
         } else {
-
             $('#results').html("<table border='1'>");
-            var headers = results[0];
+            var headers = results.data[0];
             for (var header in headers) {
                 $('#results').append('<th style="min-width:200px">' + header + '</th>');
             }
 
-            for (var x in results) {
-                var obj = results[x];
+            for (var x in results.data) {
+                var obj = results.data[x];
                 $('#results').append('<tr>');
                 for (var key in obj) {
                     var value = obj[key];
@@ -33,21 +31,18 @@ function postQueryData() {
 function postFeedbackData() {
     var isPositive = '';
     var reservationQuery = $('#reservationQuery').val();
-    var sql = $('#sql').val();
 
     if ($("#button1").is(':checked')) {
         isPositive = 'Y';
     } else {
         isPositive = 'N';
     }
-    alert("feedback submitted!");
-
 
     $.post("insertFeedback", {
         "isPositive": isPositive,
         "reservationQuery": reservationQuery
-
     }, function() {
+        alert("feedback submitted!");
         console.log("Feedback inserted");
     });
 }

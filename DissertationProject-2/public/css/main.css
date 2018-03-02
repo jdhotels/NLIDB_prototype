@@ -13,11 +13,11 @@ button {
     font-size: 16px;
 }
 
-div {
+#results {
     width: 100%;
     overflow: scroll;
 }
 
-#results:first-child {
+#results::first-line {
     color: red
 }
