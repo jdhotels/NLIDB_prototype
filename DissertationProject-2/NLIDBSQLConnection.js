@@ -14,10 +14,7 @@ var min = null;
 var listOfLocations = [];
 listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON");
 
-// Binding express app to port 3000
-app.listen(3000, function() {
-    console.log('Node server running @ http://localhost:3000');
-});
+
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,8 +22,24 @@ app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use(express.static('public'));
 
 app.get('/', function(req, res) {
-    res.sendFile('NLIDB.html', { root: __dirname });
+    res.sendFile('AboutNLIDB.html', { root: __dirname });
+
 });
+
+app.get('/NLIDB.html', function(req, res) {
+    res.sendFile('NLIDB.html', { root: __dirname });
+
+});
+
+app.get('/NLIDB_FAQ.html', function(req, res) {
+    res.sendFile('NLIDB_FAQ.html', { root: __dirname });
+
+});
+// Binding express app to port 3000
+app.listen(3000, function() {
+    console.log('Node server running @ http://localhost:3000');
+});
+
 
 app.post('/requestQuery', function(req, res) {
     var rawQuery = req.body.payload;
@@ -139,7 +152,7 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Payment_ID";
                 break;
 
-            case "type":
+            case "room":
                 stemmed[index] = "Room_Type";
                 break;
 
@@ -295,6 +308,7 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "King";
                 break;
 
+
         }
 
     });
@@ -337,7 +351,7 @@ function mapSqlQuery(formattedQuery) {
     min = getMinValue(formattedQuery);
 
 
-    if (table == "Room") {
+    if (table == "Room_Type") {
         var view = mapViewName(formattedQuery);
         sql = "select * from " + view;
 
@@ -475,7 +489,7 @@ function getSqlValue(query) {
 }
 
 function mapViewName(query) {
-    var viewTypeName = "Room";
+    var viewTypeName = "Room_Type";
 
     query.forEach(word => {
         if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Double") !== -1) {
