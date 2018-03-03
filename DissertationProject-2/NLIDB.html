@@ -12,31 +12,31 @@
 </head>
 
 <body>
-    <img-src="Primary_logo.png" alt="JD Hotels"></img-src>
-        <h1>NLIDB System</h1>
+    <img src="/images/Primary_logo.png" alt="JD Hotels">
+    <h1>NLIDB System</h1>
 
-        <div id='form'>
-            <p>
-                Please enter your reservation query:
-                <input type='text' id='reservationQuery' name='reservationQuery' />
-            </p>
-
-            <p>
-                <button name='Submit' onclick='postQueryData()'>Go</button>
-            </p>
-            <p>
-                <button type="button" onClick="window.location.reload();">Clear results</button>
-            </p>
-        </div>
-        <div id='results'></div>
+    <div id='form'>
         <p>
-            Are you satisified with these results?
-            <br>
-            <input type="radio" name="feedback" value="yes" id="button1" checked> Yes<br>
-            <input type="radio" name="feedback" value="no" id="button2"> No<br>
-            <button name='Submit' onclick='postFeedbackData()'>Submit</button>
+            Please enter your reservation query:
+            <input type='text' id='reservationQuery' name='reservationQuery' />
         </p>
-        <a href="NLIDB_FAQ.html"><button>FAQ</button></a>
+
+        <p>
+            <button name='Submit' onclick='postQueryData()'>Go</button>
+        </p>
+        <p>
+            <button type="button" onClick="window.location.reload();">Clear results</button>
+        </p>
+    </div>
+    <div id='results'></div>
+    <p>
+        Are you satisified with these results?
+        <br>
+        <input type="radio" name="feedback" value="yes" id="button1" checked> Yes<br>
+        <input type="radio" name="feedback" value="no" id="button2"> No<br>
+        <button name='Submit' onclick='postFeedbackData()'>Submit</button>
+    </p>
+    <a href="NLIDB_FAQ.html"><button>FAQ</button></a>
 
 
 </body>

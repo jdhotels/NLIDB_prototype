@@ -152,7 +152,7 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Payment_ID";
                 break;
 
-            case "room":
+            case "type":
                 stemmed[index] = "Room_Type";
                 break;
 
@@ -351,7 +351,7 @@ function mapSqlQuery(formattedQuery) {
     min = getMinValue(formattedQuery);
 
 
-    if (table == "Room_Type") {
+    if (table == "Room") {
         var view = mapViewName(formattedQuery);
         sql = "select * from " + view;
 
@@ -489,7 +489,7 @@ function getSqlValue(query) {
 }
 
 function mapViewName(query) {
-    var viewTypeName = "Room_Type";
+    var viewTypeName = "Room";
 
     query.forEach(word => {
         if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Double") !== -1) {
