@@ -1,21 +1,31 @@
 body {
-    background-color: #ceff99;
+    background-color: lightgray;
 }
 
 img {
     position: absolute;
     top: 10px;
     right: 10px;
+    width: 10%;
+}
+
+p,
+h1,
+h2 {
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 button {
     width: 200px;
     font-size: 16px;
+    background-color: lightblue;
+    border: 1px solid black;
 }
 
 #results {
     width: 100%;
     overflow: scroll;
+    text-overflow: clip;
 }
 
 #results::first-line {
