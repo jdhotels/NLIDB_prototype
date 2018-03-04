@@ -11,9 +11,17 @@ var column = null;
 var value = null;
 var max = null;
 var min = null;
+var viewName = null;
 var listOfLocations = [];
+var commentsCheck = [];
+var customerpay = [];
+var customerLocat = [];
+var customerRoom = [];
 listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON");
-
+commentsCheck.push("COMMENTS");
+customerpay.push("PAY");
+customerLocat.push("STAY AT");
+customerRoom.push("TYPE OF");
 
 
 const bodyParser = require('body-parser');
@@ -172,18 +180,6 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Surname";
                 break;
 
-            case "1":
-                stemmed[index] = "Address_Line1";
-                break;
-
-            case "2":
-                stemmed[index] = "Address_Line2";
-                break;
-
-            case "3":
-                stemmed[index] = "Address_Line3";
-                break;
-
             case "code":
                 stemmed[index] = "Postcode";
                 break;
@@ -283,6 +279,7 @@ function mapSynonyms(stemmed) {
             case "liverpool":
                 stemmed[index] = "Liverpool";
                 break;
+            
 
             case "bolton":
                 stemmed[index] = "Bolton";
@@ -307,6 +304,11 @@ function mapSynonyms(stemmed) {
             case "king":
                 stemmed[index] = "King";
                 break;
+
+            case "room":
+                stemmed[index] = "Room_Type";
+                break;
+
 
 
         }
@@ -349,20 +351,19 @@ function mapSqlQuery(formattedQuery) {
     value = getSqlValue(formattedQuery);
     max = getMaxValue(formattedQuery);
     min = getMinValue(formattedQuery);
+    view = mapViewName(formattedQuery);
 
-
-    if (table == "Room") {
-        var view = mapViewName(formattedQuery);
-        sql = "select * from " + view;
-
-    } else if (table && column && value !== null && max == null)
+    if (view !== null) {
+        sql = "select * from " + view; 
+    }
+    else if (table && column && value !== null && max == null)
         sql = "select * from " + table + " where " + column + " like '%" + value + "%'";
 
     else if (table && column && max !== null && min == null)
-        sql = "select MAX(" + column + ") from " + table;
+        sql = "select "+column1+", MAX(" + column + ") from " + table;
 
     else if (table && column && min !== null && max == null)
-        sql = "select MIN(" + column + ") from " + table;
+        sql = "select "+column1+",MIN(" + column + ") from " + table;
 
     else if (value == null && table && column !== null)
         sql = "select " + column + " from " + table;
@@ -489,7 +490,6 @@ function getSqlValue(query) {
 }
 
 function mapViewName(query) {
-    var viewTypeName = "Room";
 
     query.forEach(word => {
         if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Double") !== -1) {
@@ -503,7 +503,18 @@ function mapViewName(query) {
         } else if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Group Single") !== -1) {
             viewName = word + "GroupSingleRooms";
         }
-
+        else if (commentsCheck.indexOf(word.toUpperCase()) !== -1 && query.indexOf("King") !== -1) {
+            viewName = "KingComments";
+        }
+        else if (customerpay.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
+            viewName = "TotalCost2";
+        }
+        else if (customerLocat.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
+            viewName = "customerlocat2";
+        }
+        else if (customerRoom.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
+            viewName = "customerRoom2";
+        }
     });
     return viewName;
 }
