@@ -279,7 +279,7 @@ function mapSynonyms(stemmed) {
             case "liverpool":
                 stemmed[index] = "Liverpool";
                 break;
-            
+
 
             case "bolton":
                 stemmed[index] = "Bolton";
@@ -354,16 +354,15 @@ function mapSqlQuery(formattedQuery) {
     view = mapViewName(formattedQuery);
 
     if (view !== null) {
-        sql = "select * from " + view; 
-    }
-    else if (table && column && value !== null && max == null)
+        sql = "select * from " + view;
+    } else if (table && column && value !== null && max == null)
         sql = "select * from " + table + " where " + column + " like '%" + value + "%'";
 
     else if (table && column && max !== null && min == null)
-        sql = "select "+column1+", MAX(" + column + ") from " + table;
+        sql = "select " + column1 + ", MAX(" + column + ") from " + table;
 
     else if (table && column && min !== null && max == null)
-        sql = "select "+column1+",MIN(" + column + ") from " + table;
+        sql = "select " + column1 + ",MIN(" + column + ") from " + table;
 
     else if (value == null && table && column !== null)
         sql = "select " + column + " from " + table;
@@ -502,17 +501,13 @@ function mapViewName(query) {
             viewName = word + "HoneyMoonRooms";
         } else if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Group Single") !== -1) {
             viewName = word + "GroupSingleRooms";
-        }
-        else if (commentsCheck.indexOf(word.toUpperCase()) !== -1 && query.indexOf("King") !== -1) {
+        } else if (commentsCheck.indexOf(word.toUpperCase()) !== -1 && query.indexOf("King") !== -1) {
             viewName = "KingComments";
-        }
-        else if (customerpay.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
+        } else if (customerpay.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
             viewName = "TotalCost2";
-        }
-        else if (customerLocat.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
+        } else if (customerLocat.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
             viewName = "customerlocat2";
-        }
-        else if (customerRoom.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
+        } else if (customerRoom.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
             viewName = "customerRoom2";
         }
     });

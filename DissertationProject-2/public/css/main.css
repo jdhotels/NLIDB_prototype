@@ -25,7 +25,6 @@ button {
 #results {
     width: 100%;
     overflow: scroll;
-    text-overflow: clip;
 }
 
 #results::first-line {
