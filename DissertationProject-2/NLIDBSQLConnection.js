@@ -17,11 +17,15 @@ var commentsCheck = [];
 var customerpay = [];
 var customerLocat = [];
 var customerRoom = [];
+var cancelledBook = [];
 listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON");
 commentsCheck.push("COMMENTS");
 customerpay.push("PAY");
-customerLocat.push("STAY AT");
-customerRoom.push("TYPE OF");
+customerLocat.push("STAY");
+customerRoom.push("TYPE");
+cancelledBook.push("CANCEL");
+
+
 
 
 const bodyParser = require('body-parser');
@@ -262,7 +266,7 @@ function mapSynonyms(stemmed) {
 
             case "stay":
                 stemmed[index] = "Location";
-                break;
+                break; 
 
             case "price":
                 stemmed[index] = "Price";
@@ -473,11 +477,14 @@ function getSqlValue(query) {
         }
 
         if (table === "Room_Type" && word.toUpperCase() === "FOUR") {
-
             value = '4';
             column = 'Max_Guest';
         }
-
+        if (table === "Room_Type" && word.toUpperCase() === "4") {
+            value = '4';
+            column = 'Max_Guest';
+        }
+        
         if (table === "Room_Type" && word.toUpperCase() === "KING") {
             value = word;
             column = 'Room_Description';
@@ -509,6 +516,8 @@ function mapViewName(query) {
             viewName = "customerlocat2";
         } else if (customerRoom.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
             viewName = "customerRoom2";
+        }else if (cancelledBook.indexOf(word.toUpperCase()) !== -1) {
+        viewName = "CancelledBookings"
         }
     });
     return viewName;
