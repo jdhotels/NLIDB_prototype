@@ -11,6 +11,7 @@ var column = null;
 var value = null;
 var max = null;
 var min = null;
+var V1 = null;
 var viewName = null;
 var listOfLocations = [];
 var commentsCheck = [];
@@ -442,7 +443,12 @@ function getSqlValue(query) {
 
     query.forEach(word => {
 
-        if (table === "Booking" && word.toUpperCase() === "NOT") {
+
+        if (word.toUpperCase() === "NOT"){
+            V1 = 'N';
+        }
+
+        if (table === "Booking" && V1 !==null) {
             value = 'N';
             column = 'Paid';
         }
@@ -454,7 +460,7 @@ function getSqlValue(query) {
 
         }
 
-        if (table === "Booking" && word.toUpperCase() === "PAID") {
+        if (table === "Booking" && word.toUpperCase() === "PAID" && V1 !== 'N') {
             value = 'Y';
             column = 'Paid';
         }
