@@ -512,11 +512,15 @@ function mapViewName(query) {
         }
     });
     return viewName;
+
 }
 
 function removeArrayItem(array, itemToRemove) {
     var index = array.indexOf(itemToRemove);
     if (index > -1)
         array.splice(index, 1);
+
     return array;
+
+
 }
