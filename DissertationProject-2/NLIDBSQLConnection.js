@@ -12,6 +12,9 @@ var value = null;
 var max = null;
 var min = null;
 var V1 = null;
+var viewguest = null;
+var viewlocat = null;
+var viewroom = null;
 var viewName = null;
 var listOfLocations = [];
 var commentsCheck = [];
@@ -22,8 +25,6 @@ var cancelledBook = [];
 listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON");
 commentsCheck.push("COMMENTS");
 customerpay.push("PAY");
-customerLocat.push("STAY");
-customerRoom.push("TYPE");
 cancelledBook.push("CANCEL");
 
 
@@ -165,10 +166,6 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Payment_ID";
                 break;
 
-            case "type":
-                stemmed[index] = "Room_Type";
-                break;
-
             case "cost":
                 stemmed[index] = "Total Cost";
                 break;
@@ -265,9 +262,6 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Location";
                 break;
 
-            case "stay":
-                stemmed[index] = "Location";
-                break; 
 
             case "price":
                 stemmed[index] = "Price";
@@ -310,9 +304,6 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "King";
                 break;
 
-            case "room":
-                stemmed[index] = "Room_Type";
-                break;
 
 
 
@@ -380,6 +371,10 @@ function mapSqlQuery(formattedQuery) {
     value = null;
     max = null;
     min = null;
+    viewguest = null;
+    viewlocat = null;
+    viewroom = null;
+    viewName = null;
 
     return sql;
 }
@@ -504,6 +499,35 @@ function getSqlValue(query) {
 function mapViewName(query) {
 
     query.forEach(word => {
+
+        if (word.toUpperCase() === "2"){
+            viewguest = 'Y';
+        }
+        if (word.toUpperCase() === "STAY" && viewroom === null){
+            viewlocat = 'Y';
+        }
+        if (word.toUpperCase() === "TYPE"){
+            viewroom = 'Y';
+        }
+        if (word.toUpperCase() === "ROOM"){
+            viewroom = 'Y';
+        }
+
+        if (viewguest === null && word.toUpperCase() === "STAY"){
+            table = "Location";   
+        }
+
+        if (viewguest === null && word.toUpperCase() === "TYPE"){
+            table = "Room_Type";  
+        }
+
+        if (viewguest === null && word.toUpperCase() === "ROOM"){
+            table = "Room_Type";  
+        }
+
+
+       
+
         if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Double") !== -1) {
             viewName = word + "DoubleRooms";
         } else if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Single") !== -1) {
@@ -518,10 +542,11 @@ function mapViewName(query) {
             viewName = "KingComments";
         } else if (customerpay.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
             viewName = "TotalCost2";
-        } else if (customerLocat.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
+        } else if (viewguest !== null && viewlocat !==null) {
             viewName = "customerlocat2";
-        } else if (customerRoom.indexOf(word.toUpperCase()) !== -1 && query.indexOf("2") !== -1) {
+        } else if (viewguest !== null && viewroom !==null) {
             viewName = "customerRoom2";
+
         }else if (cancelledBook.indexOf(word.toUpperCase()) !== -1) {
         viewName = "CancelledBookings"
         }
