@@ -343,11 +343,11 @@ function mapSqlQuery(formattedQuery) {
         }
 
     });
-
+    view = mapViewName(formattedQuery);
     value = getSqlValue(formattedQuery);
     max = getMaxValue(formattedQuery);
     min = getMinValue(formattedQuery);
-    view = mapViewName(formattedQuery);
+
 
     if (view !== null) {
         sql = "select * from " + view;
