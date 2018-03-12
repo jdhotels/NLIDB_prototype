@@ -26,7 +26,7 @@ var cancelledBook = [];
 var emailCheck = [];
 var offers = [];
 listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON");
-commentsCheck.push("COMMENTS","COMMENT");
+commentsCheck.push("COMMENTS", "COMMENT");
 cancelledBook.push("CANCEL");
 emailCheck.push("EMAIL");
 offers.push("OFFER");
@@ -228,6 +228,7 @@ function mapSynonyms(stemmed) {
                 stemmed[index] = "Max_Guest";
                 break;
 
+
             case "descript":
                 stemmed[index] = "Room_Description";
                 break;
@@ -368,6 +369,7 @@ function mapSqlQuery(formattedQuery) {
 
     table = null;
     column = null;
+    column1 = null;
     value = null;
     max = null;
     min = null;
@@ -392,7 +394,7 @@ function capitalizeFirstLetter(word) {
 function getMaxValue(query) {
     var listOfMax = [];
 
-    listOfMax.push("MAX", "EXPENS", "MOST", "LAVISH","LUXURI");
+    listOfMax.push("MAX", "EXPENS", "MOST", "LAVISH", "LUXURI");
 
     query.forEach(word => {
 
@@ -413,7 +415,7 @@ function getMaxValue(query) {
 function getMinValue(query) {
     var listOfMin = [];
 
-    listOfMin.push("MIN", "CHEAPEST", "CUT", "LOW", "SALE", "ECONOMY","INEXPENS");
+    listOfMin.push("MIN", "CHEAPEST", "CUT", "LOW", "LOWEST", "SALE", "ECONOMY", "INEXPENS");
 
     query.forEach(word => {
 
@@ -440,11 +442,11 @@ function getSqlValue(query) {
     query.forEach(word => {
 
 
-        if (word.toUpperCase() === "NOT"){
+        if (word.toUpperCase() === "NOT") {
             V1 = 'N';
         }
 
-        if (table === "Booking" && V1 !==null) {
+        if (table === "Booking" && V1 !== null) {
             value = 'N';
             column = 'Paid';
         }
@@ -486,7 +488,7 @@ function getSqlValue(query) {
             value = '4';
             column = 'Max_Guest';
         }
-        
+
         if (table === "Room_Type" && word.toUpperCase() === "KING") {
             value = word;
             column = 'Room_Description';
@@ -501,47 +503,47 @@ function mapViewName(query) {
 
     query.forEach(word => {
 
-        if (word.toUpperCase() === "2"){
+        if (word.toUpperCase() === "2") {
             viewguest = 'Y';
         }
-        if (word.toUpperCase() === "TWO"){
+        if (word.toUpperCase() === "TWO") {
             viewguest = 'Y';
         }
-        if (word.toUpperCase() === "STAY" && viewroom === null){
+        if (word.toUpperCase() === "STAY" && viewroom === null) {
             viewlocat = 'Y';
         }
-        if (word.toUpperCase() === "TYPE"){
+        if (word.toUpperCase() === "TYPE") {
             viewroom = 'Y';
         }
-        if (word.toUpperCase() === "ROOM"){
+        if (word.toUpperCase() === "ROOM") {
             viewroom = 'Y';
         }
 
-        if (word.toUpperCase() === "PAY"){
+        if (word.toUpperCase() === "PAY") {
             viewpay = 'Y';
         }
 
-        if (word.toUpperCase() === "CHARG"){
+        if (word.toUpperCase() === "CHARG") {
             viewpay = 'Y';
         }
 
-        if (viewguest === null && word.toUpperCase() === "STAY"){
-            table = "Location";   
+        if (viewguest === null && word.toUpperCase() === "STAY") {
+            table = "Location";
         }
 
-        if (viewguest === null && word.toUpperCase() === "TYPE"){
-            table = "Room_Type";  
+        if (viewguest === null && word.toUpperCase() === "TYPE") {
+            table = "Room_Type";
         }
 
-        if (viewguest === null && word.toUpperCase() === "ROOM"){
-            table = "Room_Type";  
-        }
-       
-        if (viewName === null && word.toUpperCase() === "ROOM"){
-            table = "Room_Type";  
+        if (viewguest === null && word.toUpperCase() === "ROOM") {
+            table = "Room_Type";
         }
 
-         if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Double") !== -1) {
+        /* if (viewName === null && word.toUpperCase() === "ROOM") {
+            table = "Room_Type";
+        } */
+
+        if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Double") !== -1) {
             viewName = word + "DoubleRooms";
         } else if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Single") !== -1) {
             viewName = word + "SingleRooms";
@@ -553,20 +555,20 @@ function mapViewName(query) {
             viewName = word + "GroupSingleRooms";
         } else if (commentsCheck.indexOf(word.toUpperCase()) !== -1) {
             viewName = "KingComments";
-        } else if (viewguest !== null && viewlocat !==null) {
+        } else if (viewguest !== null && viewlocat !== null) {
             viewName = "customerlocat2";
-        } else if (viewguest !== null && viewroom !==null && viewpay === null) {
+        } else if (viewguest !== null && viewroom !== null && viewpay === null) {
             viewName = "customerRoom2";
-        }else if (viewguest !== null && viewpay !==null) {
-                viewName = "TotalCost2";
-        }else if (cancelledBook.indexOf(word.toUpperCase()) !== -1) {
-        viewName = "CancelledBookings"
-        
-        }else if (emailCheck.indexOf(word.toUpperCase()) !== -1) {
-            viewName = "EmailCheck"
+        } else if (viewguest !== null && viewpay !== null) {
+            viewName = "TotalCost2";
+        } else if (cancelledBook.indexOf(word.toUpperCase()) !== -1) {
+            viewName = "CancelledBookings";
 
-        }else if (offers.indexOf(word.toUpperCase()) !== -1) {
-            viewName = "MinRoom"
+        } else if (emailCheck.indexOf(word.toUpperCase()) !== -1) {
+            viewName = "EmailCheck";
+
+        } else if (offers.indexOf(word.toUpperCase()) !== -1) {
+            viewName = "MinRoom";
         }
     });
     return viewName;
@@ -579,6 +581,4 @@ function removeArrayItem(array, itemToRemove) {
         array.splice(index, 1);
 
     return array;
-
-
 }
