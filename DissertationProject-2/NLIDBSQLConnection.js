@@ -17,6 +17,8 @@ var viewlocat = null;
 var viewroom = null;
 var viewName = null;
 var viewpay = null;
+var roomdouble = null;
+var locationview = null;
 var listOfLocations = [];
 var commentsCheck = [];
 var customerpay = [];
@@ -25,7 +27,7 @@ var customerRoom = [];
 var cancelledBook = [];
 var emailCheck = [];
 var offers = [];
-listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON");
+listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON","MANCHEST");
 commentsCheck.push("COMMENTS", "COMMENT");
 cancelledBook.push("CANCEL");
 emailCheck.push("EMAIL");
@@ -434,9 +436,6 @@ function getMinValue(query) {
 
 
 function getSqlValue(query) {
-    var listOfLocations = [];
-
-    listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON");
 
 
     query.forEach(word => {
@@ -527,6 +526,18 @@ function mapViewName(query) {
             viewpay = 'Y';
         }
 
+        if (word.toUpperCase() === "DOUBLE") {
+            roomdouble = 'Y';
+        }
+
+        if (word.toUpperCase() === "DOUBL") {
+            roomdouble = 'Y';
+        }
+
+        if (listOfLocations.indexOf(word.toUpperCase()) !== -1){
+            locationview = word;
+        }
+
         if (viewguest === null && word.toUpperCase() === "STAY") {
             table = "Location";
         }
@@ -538,13 +549,18 @@ function mapViewName(query) {
         if (viewguest === null && word.toUpperCase() === "ROOM") {
             table = "Room_Type";
         }
+        
+        if (locationview !== null && roomdouble !== null) {
+            table = null;
+        }
+
 
         /* if (viewName === null && word.toUpperCase() === "ROOM") {
             table = "Room_Type";
         } */
 
-        if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Double") !== -1) {
-            viewName = word + "DoubleRooms";
+        if (locationview !== null && roomdouble !== null) {
+            viewName = locationview + "DoubleRooms";
         } else if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("Single") !== -1) {
             viewName = word + "SingleRooms";
         } else if (listOfLocations.indexOf(word.toUpperCase()) !== -1 && query.indexOf("King") !== -1) {
