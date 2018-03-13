@@ -27,8 +27,8 @@ var customerRoom = [];
 var cancelledBook = [];
 var emailCheck = [];
 var offers = [];
-listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON","MANCHEST");
-commentsCheck.push("COMMENTS", "COMMENT");
+listOfLocations.push("LONDON", "MANCHESTER", "WEST BROMWICH", "LIVERPOOL", "BOLTON");
+commentsCheck.push("COMMENTS", "COMMENT", "FEEDBACK");
 cancelledBook.push("CANCEL");
 emailCheck.push("EMAIL");
 offers.push("OFFER");
@@ -70,6 +70,7 @@ app.post('/requestQuery', function(req, res) {
     console.log("Received: " + rawQuery + ". Formatted: " + stemmed);
     var withSynonyms = mapSynonyms(stemmed);
     var sql = mapSqlQuery(withSynonyms);
+    console.log("SQL: " + sql);
     latestSqlQuery = sql;
 
     var results = {
@@ -534,7 +535,7 @@ function mapViewName(query) {
             roomdouble = 'Y';
         }
 
-        if (listOfLocations.indexOf(word.toUpperCase()) !== -1){
+        if (listOfLocations.indexOf(word.toUpperCase()) !== -1) {
             locationview = word;
         }
 
@@ -549,7 +550,7 @@ function mapViewName(query) {
         if (viewguest === null && word.toUpperCase() === "ROOM") {
             table = "Room_Type";
         }
-        
+
         if (locationview !== null && roomdouble !== null) {
             table = null;
         }
