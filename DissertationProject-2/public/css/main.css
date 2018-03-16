@@ -1,31 +1,108 @@
 body {
-    background-color: lightgray;
+    height: 1000px;
+    background:linear-gradient(to top right, #ffffff 1%, #33cc33 100%);
 }
 
-.center {
+.logo {
     display: block;
     margin-left: auto;
-    margin-right: auto;
-    width: 20%;
+    margin-right: 470px;
+    margin-top:50px;
+    margin-bottom: auto;
+    width: 35%;
 }
 
+
 p,
-h1,
 h2,
 li {
     font-family: Arial, Helvetica, sans-serif;
 }
+#reservationQuery{
+    width: 600px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+h1 {
+    text-align: center;
+}
 
-button {
+p {
+    text-align: center;
+}
+
+button6 {
     width: 200px;
     font-size: 16px;
     background-color: lightblue;
     border: 1px solid black;
+    display: block;
+    margin-top: -20px;
+    margin-bottom: auto;
+    margin-right: 500px;
+    margin-left: auto;
+    
+
+}
+
+button5 {
+    width: 200px;
+    font-size: 16px;
+    background-color: lightblue;
+    border: 1px solid black;
+    display: block;
+    margin-top: -300px;
+    margin-bottom: auto;
+    margin-right: auto;
+    margin-left: 500px;
+    
+
+}
+
+button4 {
+    width: 200px;
+    font-size: 16px;
+    background-color: lightblue;
+    border: 1px solid black;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+button3 {
+    width: 200px;
+    font-size: 16px;
+    background-color: lightblue;
+    border: 1px solid black;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+   
+}
+button2 {
+    width: 60px;
+    font-size: 16px;
+    background-color: lightblue;
+    border: 1px solid black;
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 #results {
     width: 100%;
     overflow: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 ::-webkit-scrollbar {
@@ -45,3 +122,6 @@ button {
 #results::first-line {
     color: red
 }
+
+
+
