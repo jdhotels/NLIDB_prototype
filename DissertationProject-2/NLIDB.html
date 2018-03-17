@@ -14,20 +14,22 @@
 <body>
 
     <img src="/images/LogoMakr_9YezjR.png" alt="JD Hotels" class="logo">
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
     <div id='form'>
         <p>
             Please enter your query:
-            <input type='text' id='reservationQuery' name='reservationQuery'/><button2 name='Submit' onclick='postQueryData()'>Go</button2>
-                
+
+            <input type='text' id='reservationQuery' name='reservationQuery' />
+            <button class="button Btn2" name='Submit' onclick='postQueryData()'>Go</button>
+
         </p>
         <div id='results'></div>
         <br>
         <br>
         <p>
-            <button3 type="button" onClick="window.location.reload();">Clear results</button3>
+            <button class="button Btn3" type="button" onClick="window.location.reload();">Clear results</button>
         </p>
     </div>
 
@@ -36,12 +38,18 @@
         <br>
         <input type="radio" name="feedback" value="yes" id="button1" checked> Yes<br>
         <input type="radio" name="feedback" value="no" id="button2"> No<br>
-        <button4 name='Submit' onclick='postFeedbackData()'>Submit</button4>
+        <button class="button Btn4" name='Submit' onclick='postFeedbackData()'>Submit</button>
     </p>
-    <a href="NLIDB_FAQ.html"></a><button5>What is an NLIDB?</button5>
-    <a href="/"><button6>About NLIDB</button></a>
 
 
+    <a href="NLIDB_FAQ.html">
+        <button class="button Btn5">What is an NLIDB?</button>
+    </a>
+
+
+    <a href="/">
+        <button class="button Btn6">About NLIDB</button>
+    </a>
 </body>
 
 </html>

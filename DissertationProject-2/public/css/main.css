@@ -1,127 +1,119 @@
-body {
-    height: 1000px;
-    background:linear-gradient(to top right, #ffffff 1%, #33cc33 100%);
-}
-
-.logo {
-    display: block;
-    margin-left: auto;
-    margin-right: 470px;
-    margin-top:50px;
-    margin-bottom: auto;
-    width: 35%;
-}
-
-
-p,
-h2,
-li {
-    font-family: Arial, Helvetica, sans-serif;
-}
-#reservationQuery{
-    width: 600px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    
-}
-h1 {
-    text-align: center;
-}
-
-p {
-    text-align: center;
-}
-
-button6 {
-    width: 200px;
-    font-size: 16px;
-    background-color: lightblue;
-    border: 1px solid black;
-    display: block;
-    margin-top: -20px;
-    margin-bottom: auto;
-    margin-right: 500px;
-    margin-left: auto;
-    
-
-}
-
-button5 {
-    width: 200px;
-    font-size: 16px;
-    background-color: lightblue;
-    border: 1px solid black;
-    display: block;
-    margin-top: -300px;
-    margin-bottom: auto;
-    margin-right: auto;
-    margin-left: 500px;
-    
-
-}
-
-button4 {
-    width: 200px;
-    font-size: 16px;
-    background-color: lightblue;
-    border: 1px solid black;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    
-}
-
-button3 {
-    width: 200px;
-    font-size: 16px;
-    background-color: lightblue;
-    border: 1px solid black;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
-   
-}
-button2 {
-    width: 60px;
-    font-size: 16px;
-    background-color: lightblue;
-    border: 1px solid black;
-    display: block;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-#results {
-    width: 100%;
-    overflow: auto;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-::-webkit-scrollbar {
-    width: 12px;
-}
-
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-}
-
-#results::first-line {
-    color: red
-}
-
-
-
+        body {
+            background: radial-gradient(ellipse at center, yellowgreen 0%, green 100%);
+            height: 850px;
+        }
+        
+        .logo {
+            display: inline-block;
+            transform: translate(50%, 10%);
+            opacity: 0.7;
+        }
+        
+        p,
+        h2,
+        li {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        #reservationQuery {
+            width: 250px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        p {
+            text-align: center;
+        }
+        
+        a {
+            text-decoration: none;
+            width: 200;
+        }
+        
+        .Btn6 {
+            width: 200px;
+            float: left;
+            display: block;
+            margin-top: -23px;
+            margin-bottom: auto;
+            margin-right: 400px;
+            margin-left: 700px;
+            height: 23px;
+        }
+        
+        .Btn5 {
+            width: 200px;
+            float: left;
+            display: block;
+            margin-bottom: auto;
+            margin-right: auto;
+            margin-left: 380px;
+            margin-top: 30px;
+            height: 23px;
+        }
+        
+        .Btn4 {
+            width: 200px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+            margin-bottom: auto;
+        }
+        
+        .Btn3 {
+            width: 200px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: -20px;
+            margin-bottom: auto;
+        }
+        
+        .Btn2 {
+            width: 60px;
+            display: block;
+            margin-top: auto;
+            margin-bottom: -10px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        button {
+            width: 200px;
+            font-size: 16px;
+            background-color: lightblue;
+            border: 1px solid black;
+        }
+        
+        #results {
+            width: 100%;
+            overflow: auto;
+            text-align: center;
+        }
+        
+         ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        }
+        
+        #results::first-line {
+            color: red;
+        }
