@@ -5,7 +5,7 @@ function postQueryData() {
     }, function(results) {
         console.log(results);
         if (results.data == "No Results Returned") {
-            $('#results').text("No results returned, please retype your question");
+            $('#results').text("No results returned, please rephrase your question");
 
         } else {
             $('#results').html("<table border='1'>");
