@@ -176,6 +176,7 @@ function mapSqlQuery(formattedQuery) {
     viewroom = null;
     viewName = null;
     viewpay = null;
+    roomdouble = null;
 
     return sql;
 }
